@@ -5,9 +5,9 @@ body {
     padding: 0;
 }
 
-.container {
+.form-container {
     width: 100%;
-    max-width: 800px;
+    max-width: 600px;
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
@@ -20,23 +20,21 @@ body {
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    text-align: left;
 }
 
-.header img.logo {
-    margin-right: 10px;
+.header h1 {
+    margin: 0 0 0 10px;
 }
 
-h1 {
-    margin: 0;
+.logo {
+    height: 50px;
 }
 
-h2, h3 {
-    text-align: center;
-    color: #333;
-}
-
-.filter-container, .pdf-list {
+h2 {
     margin-bottom: 20px;
+    color: #333;
+    text-align: center;
 }
 
 label {
@@ -45,13 +43,26 @@ label {
     color: #333;
 }
 
-input, button {
+input, textarea, button {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
 }
 
 button {
@@ -65,21 +76,97 @@ button:hover {
     background-color: #218838;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
     padding: 10px;
-    border-bottom: 1px solid #ccc;
+    background-color: #333;
+    color: white;
+    position: relative;
 }
 
-li a {
+footer a {
+    color: #fff;
     text-decoration: none;
-    color: #007bff;
 }
 
-li a:hover {
+footer a:hover {
     text-decoration: underline;
+}
+
+.sphere-button {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    border: 2px solid black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.sphere-button:hover {
+    background-color: #444;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#open-email {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#open-email:hover {
+    background-color: #0056b3;
 }
