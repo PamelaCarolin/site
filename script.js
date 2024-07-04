@@ -1,22 +1,73 @@
-var swiper = new Swiper(".swiper", {
-    effect: "cube",
-    allowTouchMove: false,
-    grabCursor: false,
-    cubeEffect: {
-        shadow: true,
-        slideShadows: true,
-        shadowOffset: 20,
-        shadowScale: 0.94,
-    },
-    mousewheel: true
-});
-swiper.on('slideChange', function () {
-    for (let i of document.querySelectorAll(".Links li")) i.classList.remove("activeLink")
-    Array.from(document.querySelectorAll(".Links li"))[swiper.activeIndex].classList.add("activeLink")
+document.addEventListener('DOMContentLoaded', function() {
+    loadPDFs();
 
+    document.getElementById('filter-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        loadPDFs();
+    });
 });
-function Navigate(indx) {
-    for (let i of document.querySelectorAll(".Links li")) i.classList.remove("activeLink")
-    Array.from(document.querySelectorAll(".Links li"))[indx].classList.add("activeLink")
-    swiper.slideTo(indx, 1000, true)
+
+async function loadPDFs() {
+    const companyName = document.getElementById('company-name').value.toLowerCase();
+    const date = document.getElementById('date').value;
+
+    const response = await fetch('https://raw.githubusercontent.com/SEU_USUARIO/SEU_REPOSITORIO/branch/path/to/data/data.json');
+    const files = await response.json();
+
+    const pdfList = document.getElementById('pdf-list');
+    pdfList.innerHTML = '';
+
+    const filteredFiles = files.filter(file => {
+        let match = true;
+        
+        if (companyName && !file.companyName.toLowerCase().includes(companyName)) {
+            match = false;
+        }
+        
+        if (date && file.date !== date) {
+            match = false;
+        }
+
+        return match;
+    });
+
+    if (filteredFiles.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'Não há dados para mostrar';
+        pdfList.appendChild(li);
+    } else {
+        filteredFiles.forEach(file => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.href = file.download_url;
+            a.textContent = file.name;
+            li.appendChild(a);
+            pdfList.appendChild(li);
+        });
+    }
+}
+
+async function savePDFData(data) {
+    const response = await fetch('https://github.com/PamelaCarolin/site/edit/main/script.js/data.json', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer SEU_TOKEN'
+        },
+        body: JSON.stringify({
+            message: "Add PDF data",
+            content: btoa(JSON.stringify(data)),
+            sha: await getFileSha()
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to save PDF data');
+    }
+}
+
+async function getFileSha() {
+    const response = await fetch('https://github.com/PamelaCarolin/site/edit/main/script.js');
+    const data = await response.json();
+    return data.sha;
 }
