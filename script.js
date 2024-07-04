@@ -1,48 +1,81 @@
-document.addEventListener('DOMContentLoaded', function() {
-    loadPDFs();
+document.getElementById('client-form').addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-    document.getElementById('filter-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        loadPDFs();
-    });
+    var cnpj = document.getElementById('cnpj').value;
+    var email = document.getElementById('email').value;
+    var address = document.getElementById('address').value;
+    var phone = document.getElementById('phone').value;
+    var companyName = document.getElementById('company-name').value;
+    var date = new Date().toISOString().split('T')[0];
+
+    if (!validateCNPJ(cnpj)) {
+        alert('CNPJ inválido! Deve conter 14 dígitos ou estar no formato 00.000.000/0000-00.');
+        return;
+    }
+
+    if (!validateEmail(email)) {
+        alert('E-mail inválido!');
+        return;
+    }
+
+    if (!address) {
+        alert('Endereço inválido!');
+        return;
+    }
+
+    generatePDFAndOpenEmail();
+
+    // Save data to JSON file
+    const pdfData = {
+        companyName,
+        cnpj,
+        email,
+        address,
+        phone,
+        date,
+        name: `${companyName}_dados_empresa.pdf`,
+        download_url: `https://raw.githubusercontent.com/PamelaCarolin/site/main/${companyName}_dados_empresa.pdf`
+    };
+
+    await savePDFData(pdfData);
 });
 
-async function loadPDFs() {
-    const companyName = document.getElementById('company-name').value.toLowerCase();
-    const date = document.getElementById('date').value;
-
-    const response = await fetch('https://github.com/PamelaCarolin/site/main/data.json');
-    const files = await response.json();
-
-    const pdfList = document.getElementById('pdf-list');
-    pdfList.innerHTML = '';
-
-    const filteredFiles = files.filter(file => {
-        let match = true;
-        
-        if (companyName && !file.companyName.toLowerCase().includes(companyName)) {
-            match = false;
-        }
-        
-        if (date && file.date !== date) {
-            match = false;
-        }
-
-        return match;
-    });
-
-    if (filteredFiles.length === 0) {
-        const li = document.createElement('li');
-        li.textContent = 'Não há dados para mostrar';
-        pdfList.appendChild(li);
-    } else {
-        filteredFiles.forEach(file => {
-            const li = document.createElement('li');
-            const a = document.createElement('a');
-            a.href = file.download_url;
-            a.textContent = file.name;
-            li.appendChild(a);
-            pdfList.appendChild(li);
-        });
-    }
+function validateCNPJ(cnpj) {
+    var re = /^(\d{14}|\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2})$/;
+    return re.test(cnpj);
 }
+
+function validateEmail(email) {
+    var re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function generatePDFAndOpenEmail() {
+    var { jsPDF } = window.jspdf;
+    var doc = new jsPDF();
+
+    var formData = new FormData(document.getElementById('client-form'));
+    var companyName = formData.get('company-name');
+
+    // Adicionar o logo e o título ao PDF
+    var img = new Image();
+    img.src = 'Logo_Multipla.jpg'; // Caminho para a imagem do logo
+    img.onload = function() {
+        doc.addImage(img, 'JPEG', 10, 10, 50, 25); // Adiciona o logo
+        doc.setFontSize(22);
+        var title = 'Multipla Contabilidade';
+        var titleWidth = doc.getTextWidth(title);
+        var pageWidth = doc.internal.pageSize.getWidth();
+        var titleX = (pageWidth - titleWidth) / 2;
+        doc.text(title, titleX, 20); // Centraliza o título principal
+        doc.setFontSize(16);
+
+        // Ajustar o subtítulo para caber na linha
+        var subtitle = 'Análise de dados para elaboração de prestação de serviço';
+        var splitSubtitle = doc.splitTextToSize(subtitle, 120); // Ajusta a largura conforme necessário
+
+        doc.text(splitSubtitle, 70, 30); // Adiciona o subtítulo
+
+        var yOffset = 50; // Posição inicial para o conteúdo
+        var lineHeight = 10; // Altura da linha para o conteúdo
+        var pageHeight = doc.internal.pageSize.getHeight
