@@ -11,7 +11,8 @@ async function loadPDFs() {
     const companyName = document.getElementById('company-name').value.toLowerCase();
     const date = document.getElementById('date').value;
 
-    const response = await fetch('https://api.github.com/repos/PamelaCarolin/client-data/contents/submissions/pdf');
+    // URL da função serverless no Netlify para listar os arquivos PDF
+    const response = await fetch('/.netlify/functions/list-pdfs');
     const files = await response.json();
 
     const pdfList = document.getElementById('pdf-list');
@@ -19,8 +20,8 @@ async function loadPDFs() {
 
     const filteredFiles = files.filter(file => {
         let match = true;
-
-        // Extraímos o nome da empresa e a data do nome do arquivo
+        
+        // Assumindo que os arquivos são nomeados de forma que podemos extrair a empresa e a data
         const [namePart, datePart] = file.name.split('_');
 
         if (companyName && !namePart.toLowerCase().includes(companyName)) {
