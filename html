@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de PDFs</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="Logo_Multipla.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="Logo_Multipla.jpg" alt="Logo" class="logo">
+            <h1>Multipla Contabilidade</h1>
+        </div>
+        <h2>Análise de dados para elaboração da proposta de prestação de serviço</h2>
+
+        <div class="filter-container">
+            <h3>Filtrar PDFs</h3>
+            <form id="filter-form">
+                <label for="company-name">Nome da empresa:</label>
+                <input type="text" id="company-name" name="company-name">
+
+                <label for="date">Data:</label>
+                <input type="date" id="date" name="date">
+
+                <button type="submit">Filtrar</button>
+            </form>
+        </div>
+
+        <div class="pdf-list">
+            <h3>Lista de PDFs Salvos</h3>
+            <ul id="pdf-list">
+                <!-- PDFs serão listados aqui -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
