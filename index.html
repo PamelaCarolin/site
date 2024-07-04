@@ -3,36 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão de PDFs</title>
+    <title>Análise de Dados do Cliente</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="Logo_Multipla.ico" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="form-container" id="form-container">
         <div class="header">
-            <img src="Logo_Multipla.jpg" alt="Logo" class="logo">
+            <img src="Logo_Multipla.jpg" alt="Logo" class="logo"> <!-- Logo à esquerda -->
             <h1>Multipla Contabilidade</h1>
         </div>
         <h2>Análise de dados para elaboração da proposta de prestação de serviço</h2>
+        <form id="client-form">
+            <label for="company-name">Nome da empresa:</label>
+            <input type="text" id="company-name" name="company-name" required>
+            
+            <label for="cnpj">CNPJ:</label>
+            <input type="text" id="cnpj" name="cnpj" required>
+            
+            <label for="address">Endereço:</label>
+            <input type="text" id="address" name="address" required>
+            
+            <label for="phone">Telefone:</label>
+            <input type="text" id="phone" name="phone" required>
+            
+            <label for="email">E-mail para Contato:</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="branches">Possui Filiais:</label>
+            <div class="checkbox-group checkbox-wrapper-13">
+                <input id="branches-sim" type="checkbox" name="branches" value="Sim" class="single-checkbox">
+                <label for="branches-sim">Sim</label>
+                <input id="branches-nao" type="checkbox" name="branches" value="Não" class="single-checkbox">
+                <label for="branches-nao">Não</label>
+            </div>
+            
+            <label for="branch-quantity">Quantidade de Filiais:</label>
+            <input type="number" id="branch-quantity" name="branch-quantity">
+            
+            <label for="activity">Ramo de atividade:</label>
+            <input type="text" id="activity" name="activity">
+            
+            <label for="employees">Quantidade de funcionários:</label>
+            <input type="number" id="employees" name="employees">
+            
+            <label for="partners">Quantidade de sócios administradores:</label>
+            <input type="number" id="partners" name="partners">
+            
+            <label for="average-revenue">Faturamento médio (mensal):</label>
+            <input type="text" id="average-revenue" name="average-revenue">
+            
+            <label for="banks">Quantidade de bancos com que mantém suas operações:</label>
+            <input type="text" id="banks" name="banks">
+            
+            <label for="tax-regime">Regime de tributação:</label>
+            <input type="text" id="tax-regime" name="tax-regime">
+            
+            <label for="debt">Possui Débito ou parcelamento de impostos:</label>
+            <div class="checkbox-group checkbox-wrapper-13">
+                <input id="debt-sim" type="checkbox" name="debt" value="Sim" class="single-checkbox">
+                <label for="debt-sim">Sim</label>
+                <input id="debt-nao" type="checkbox" name="debt" value="Não" class="single-checkbox">
+                <label for="debt-nao">Não</label>
+            </div>
+            
+            <label for="info-responsible">Nome do responsável pelas informações:</label>
+            <input type="text" id="info-responsible" name="info-responsible">
+            
+            <label for="system">Empresa possui sistema?</label>
+            <div class="checkbox-group checkbox-wrapper-13">
+                <input id="system-sim" type="checkbox" name="system" value="Sim" class="single-checkbox">
+                <label for="system-sim">Sim</label>
+                <input id="system-nao" type="checkbox" name="system" value="Não" class="single-checkbox">
+                <label for="system-nao">Não</label>
+            </div>
+            
+            <label for="system-name">Se sim, qual sistema:</label>
+            <input type="text" id="system-name" name="system-name">
 
-        <div class="filter-container">
-            <h3>Filtrar PDFs</h3>
-            <form id="filter-form">
-                <label for="company-name">Nome da empresa:</label>
-                <input type="text" id="company-name" name="company-name">
+            <label for="discovery">Como conheceu o escritório Múltipla?:</label>
+            <input type="text" id="discovery" name="discovery">
+            
+            <label for="additional-info">Observações / dados adicionais:</label>
+            <textarea id="additional-info" name="additional-info"></textarea>
+            
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
 
-                <label for="date">Data:</label>
-                <input type="date" id="date" name="date">
+    <footer>
+        <p>Comercial: <a href="mailto:comercial@contabilmultipla.com.br">comercial@contabilmultipla.com.br</a></p>
+        <a href="https://seusublink.com" class="sphere-button">Go</a>
+    </footer>
 
-                <button type="submit">Filtrar</button>
-            </form>
-        </div>
-
-        <div class="pdf-list">
-            <h3>Lista de PDFs Salvos</h3>
-            <ul id="pdf-list">
-                <!-- PDFs serão listados aqui -->
-            </ul>
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="modal-close">&times;</span>
+            <p>PDF SALVO! Por favor, anexar o PDF no e-mail e enviar.</p>
+            <button id="open-email">Abrir E-mail</button>
         </div>
     </div>
 
