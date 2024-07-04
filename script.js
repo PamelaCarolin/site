@@ -11,7 +11,7 @@ async function loadPDFs() {
     const companyName = document.getElementById('company-name').value.toLowerCase();
     const date = document.getElementById('date').value;
 
-    const response = await fetch('https://raw.githubusercontent.com/PamelaCarolin/site/main/data.json');
+    const response = await fetch('https://mutiplacontabilidadepdf.netlify.app/data.json');
     const files = await response.json();
 
     const pdfList = document.getElementById('pdf-list');
