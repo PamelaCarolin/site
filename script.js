@@ -46,28 +46,3 @@ async function loadPDFs() {
         });
     }
 }
-
-async function savePDFData(data) {
-    const response = await fetch('https://github.com/PamelaCarolin/site/edit/main/script.js/data.json', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer SEU_TOKEN'
-        },
-        body: JSON.stringify({
-            message: "Add PDF data",
-            content: btoa(JSON.stringify(data)),
-            sha: await getFileSha()
-        })
-    });
-
-    if (!response.ok) {
-        throw new Error('Failed to save PDF data');
-    }
-}
-
-async function getFileSha() {
-    const response = await fetch('https://github.com/PamelaCarolin/site/edit/main/script.js');
-    const data = await response.json();
-    return data.sha;
-}
