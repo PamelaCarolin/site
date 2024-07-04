@@ -11,7 +11,7 @@ async function loadPDFs() {
     const companyName = document.getElementById('company-name').value.toLowerCase();
     const date = document.getElementById('date').value;
 
-    const response = await fetch('https://mutiplacontabilidadepdf.netlify.app/data.json');
+    const response = await fetch('https://api.github.com/repos/PamelaCarolin/client-data/contents/submissions/pdf');
     const files = await response.json();
 
     const pdfList = document.getElementById('pdf-list');
@@ -19,12 +19,15 @@ async function loadPDFs() {
 
     const filteredFiles = files.filter(file => {
         let match = true;
-        
-        if (companyName && !file.companyName.toLowerCase().includes(companyName)) {
+
+        // Extraímos o nome da empresa e a data do nome do arquivo
+        const [namePart, datePart] = file.name.split('_');
+
+        if (companyName && !namePart.toLowerCase().includes(companyName)) {
             match = false;
         }
-        
-        if (date && file.date !== date) {
+
+        if (date && datePart && datePart.split('.')[0] !== date) {
             match = false;
         }
 
