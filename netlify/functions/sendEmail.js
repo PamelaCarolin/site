@@ -6,11 +6,11 @@ exports.handler = async function(event, context) {
 
     // Configuração do transportador de e-mail
     const transporter = nodemailer.createTransport({
-        host: 'smtp.seuprovedor.com',
+        host: 'smtp.office365.com',
         port: 587,
         auth: {
-            user: 'seuemail@provedor.com',
-            pass: 'suasenha'
+            user: 'pamela.silva@contabilmultipla.com.br',
+            pass: 'Saq23181'
         }
     });
 
