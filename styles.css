@@ -83,3 +83,9 @@ li a {
 li a:hover {
     text-decoration: underline;
 }
+
+#statusMessage {
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+}
