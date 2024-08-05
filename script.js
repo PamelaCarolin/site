@@ -78,7 +78,9 @@ async function sendEmail() {
         const link = document.createElement('a');
         link.href = 'data:application/pdf;base64,' + pdfBase64;
         link.download = 'formulario.pdf';
+        document.body.appendChild(link);
         link.click();
+        document.body.removeChild(link);
     } else {
         alert('Erro ao enviar e-mail.');
     }
