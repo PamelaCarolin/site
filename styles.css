@@ -35,7 +35,7 @@ h2, h3 {
     color: #333;
 }
 
-.filter-container, .pdf-list {
+.filter-container, .pdf-list, .contact-container {
     margin-bottom: 20px;
 }
 
@@ -45,7 +45,7 @@ label {
     color: #333;
 }
 
-input, button {
+input, button, textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
