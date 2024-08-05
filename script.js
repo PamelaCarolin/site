@@ -54,6 +54,9 @@ async function loadPDFs() {
 async function sendEmail() {
     const form = document.getElementById('contactForm');
     const formData = new FormData(form);
+    const statusMessage = document.getElementById('statusMessage');
+
+    statusMessage.textContent = 'Aguarde um momento por favor, enquanto enviamos suas informações...';
 
     const data = {
         name: formData.get('name'),
@@ -71,7 +74,7 @@ async function sendEmail() {
     });
 
     if (response.ok) {
-        alert('E-mail enviado com sucesso! Uma cópia do PDF foi baixada para o seu dispositivo.');
+        statusMessage.textContent = 'Enviarei sua cópia dos dados, e já foi enviado os dados para nossa equipe, obrigado!!';
 
         // Baixar a cópia do PDF para o cliente
         const pdfBase64 = data.pdfData;
@@ -82,7 +85,7 @@ async function sendEmail() {
         link.click();
         document.body.removeChild(link);
     } else {
-        alert('Erro ao enviar e-mail.');
+        statusMessage.textContent = 'Erro ao enviar e-mail. Por favor, tente novamente mais tarde.';
     }
 }
 
@@ -93,7 +96,4 @@ async function generatePDFBase64(formData) {
 
     doc.text(`Nome: ${formData.get('name')}`, 10, 10);
     doc.text(`Email: ${formData.get('email')}`, 10, 20);
-    doc.text(`Mensagem: ${formData.get('message')}`, 10, 30);
-
-    return doc.output('datauristring').split(',')[1]; // Retorna apenas a parte base64
-}
+    doc.text(`Mensagem:
