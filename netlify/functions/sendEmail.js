@@ -9,15 +9,15 @@ exports.handler = async function(event, context) {
         host: 'smtp.office365.com',
         port: 587,
         auth: {
-            user: 'pamela.silva@contabilmultipla.com.br',
-            pass: 'Saq23181'
+            user: process.env.EMAIL_USER,  // Use variáveis de ambiente para segurança
+            pass: process.env.EMAIL_PASS   // Use variáveis de ambiente para segurança
         }
     });
 
     // Configuração do e-mail
     const mailOptions = {
-        from: 'seuemail@provedor.com',
-        to: 'seuemail@provedor.com',
+        from: process.env.EMAIL_USER, // Usando a variável de ambiente
+        to: 'pamela.silva@contabilmultipla.com.br', // O e-mail de destino correto
         subject: 'Dados do Formulário',
         text: `Nome da Empresa: ${company_name}\nData: ${date}`
     };
