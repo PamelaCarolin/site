@@ -1,1 +1,4 @@
 
+netlify/
+  functions/
+    sendEmail.js
